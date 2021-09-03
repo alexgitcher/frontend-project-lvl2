@@ -1,1 +1,3 @@
-console.log('frontend-project-lvl2');
+import genDiff from './src/gendiff.js';
+
+export default genDiff;
