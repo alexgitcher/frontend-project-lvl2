@@ -1,4 +1,4 @@
-#!/usr/bin/env node --experimental-json-modules
+#!/usr/bin/env node --experimental-json-modules --no-warnings
 
 import { program } from 'commander';
 import pckg from '../package.json';
@@ -11,6 +11,5 @@ program
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format [type]', 'output format')
   .version(pckg.version)
+  .action((filepath1, filepath2, options, command) => genDiff(filepath1, filepath2))
   .parse();
-
-genDiff('gendiff');
