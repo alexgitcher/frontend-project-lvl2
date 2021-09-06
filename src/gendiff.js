@@ -21,7 +21,7 @@ const getParsedFileData = (filepath) => {
   const fileExt = path.extname(filepath).slice(1);
   const parse = parseByExt[fileExt];
 
-  return parse(readFileSync(filepath, 'utf-8'))
+  return parse(readFileSync(filepath, 'utf-8'));
 };
 
 const genDiff = (path1, path2) => {
@@ -46,12 +46,14 @@ const genDiff = (path1, path2) => {
         ...acc,
         [`+ ${key}`]: value2,
       };
-    } else if (value2 === undefined) {
+    }
+    if (value2 === undefined) {
       return {
         ...acc,
         [`- ${key}`]: value1,
       };
-    } else if (value1 !== value2) {
+    }
+    if (value1 !== value2) {
       return {
         ...acc,
         [`- ${key}`]: value1,
@@ -69,7 +71,7 @@ const genDiff = (path1, path2) => {
 
   const formattedResult = JSON
     .stringify(compare, null, '  ')
-    .replace(regex, "");
+    .replace(regex, '');
 
   console.log(formattedResult);
 };

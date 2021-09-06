@@ -11,5 +11,5 @@ program
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format [type]', 'output format')
   .version(pckg.version)
-  .action((filepath1, filepath2, options, command) => genDiff(filepath1, filepath2))
+  .action((filepath1, filepath2) => genDiff(filepath1, filepath2))
   .parse();
