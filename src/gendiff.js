@@ -1,17 +1,8 @@
 import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
+import path from 'path';
 import _ from 'lodash';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const getFilePath = (filename) => {
-  if (path.isAbsolute(filename)) {
-    return filename;
-  }
-  return path.resolve(__dirname, '..', '__fixtures__', filename);
-};
+import getFilePath from './utils.js';
 
 const parseByExt = {
   json: JSON.parse,
@@ -74,6 +65,8 @@ const genDiff = (path1, path2) => {
     .replace(regex, '');
 
   console.log(formattedResult);
+
+  return formattedResult;
 };
 
 export default genDiff;
