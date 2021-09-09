@@ -5,6 +5,14 @@
 [![Actions Status](https://github.com/alexgitcher/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/alexgitcher/frontend-project-lvl2/actions)
 [![build](https://github.com/alexgitcher/frontend-project-lvl2/actions/workflows/build.yml/badge.svg)](https://github.com/alexgitcher/frontend-project-lvl2/actions/workflows/build.yml)
 
-### Demo
+### gendiff json demo
 
 [![asciicast](https://asciinema.org/a/cAFBfvSUC8RTOJ7Rr4Vtkq0va.svg)](https://asciinema.org/a/cAFBfvSUC8RTOJ7Rr4Vtkq0va)
+
+### gendiff yaml/yml demo
+
+[![asciicast](https://asciinema.org/a/OLwkHzFHGqVcBtckXjclGaOYI.svg)](https://asciinema.org/a/OLwkHzFHGqVcBtckXjclGaOYI)
+
+### gendiff json/yaml demo
+
+[![asciicast](https://asciinema.org/a/cs5ekjJxjj58y3EwhUoMF0WM4.svg)](https://asciinema.org/a/cs5ekjJxjj58y3EwhUoMF0WM4)
