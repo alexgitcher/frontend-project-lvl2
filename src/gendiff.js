@@ -3,14 +3,11 @@ import path from 'path';
 import _ from 'lodash';
 
 import getFilePath from './utils.js';
-
-const parseByExt = {
-  json: JSON.parse,
-};
+import getParser from './parsers.js';
 
 const getParsedFileData = (filepath) => {
   const fileExt = path.extname(filepath).slice(1);
-  const parse = parseByExt[fileExt];
+  const parse = getParser(fileExt);
 
   return parse(readFileSync(filepath, 'utf-8'));
 };
