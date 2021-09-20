@@ -9,7 +9,7 @@ program
   .argument('<filepath1>')
   .argument('<filepath2>')
   .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format [type]', 'output format')
+  .option('-f, --format [type]', 'output format', 'stylish')
   .version(pckg.version)
-  .action((filepath1, filepath2) => genDiff(filepath1, filepath2))
+  .action((filepath1, filepath2, { format }) => genDiff(filepath1, filepath2, format))
   .parse();
