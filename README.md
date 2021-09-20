@@ -7,12 +7,12 @@
 
 ### gendiff json demo
 
-[![asciicast](https://asciinema.org/a/cAFBfvSUC8RTOJ7Rr4Vtkq0va.svg)](https://asciinema.org/a/cAFBfvSUC8RTOJ7Rr4Vtkq0va)
+[![asciicast](https://asciinema.org/a/pCy7B0oVjOUnIr0NIwZuKjxib.svg)](https://asciinema.org/a/pCy7B0oVjOUnIr0NIwZuKjxib)
 
 ### gendiff yaml/yml demo
 
-[![asciicast](https://asciinema.org/a/OLwkHzFHGqVcBtckXjclGaOYI.svg)](https://asciinema.org/a/OLwkHzFHGqVcBtckXjclGaOYI)
+[![asciicast](https://asciinema.org/a/OQneYNFEvYPPolL2Rwhqp15l7.svg)](https://asciinema.org/a/OQneYNFEvYPPolL2Rwhqp15l7)
 
 ### gendiff json/yaml demo
 
-[![asciicast](https://asciinema.org/a/cs5ekjJxjj58y3EwhUoMF0WM4.svg)](https://asciinema.org/a/cs5ekjJxjj58y3EwhUoMF0WM4)
+[![asciicast](https://asciinema.org/a/pXjJM9QVfoJBZK8TnzEJJKjg6.svg)](https://asciinema.org/a/pXjJM9QVfoJBZK8TnzEJJKjg6)
