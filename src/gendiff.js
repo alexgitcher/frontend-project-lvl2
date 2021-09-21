@@ -4,7 +4,7 @@ import path from 'path';
 import getFilePath from './utils.js';
 import getParser from './parsers.js';
 import buildAst from './build-ast.js';
-import stylish from './stylish.js';
+import getFormatter from '../formatters/index.js';
 
 const getParsedFileData = (filepath) => {
   const fileExt = path.extname(filepath).slice(1);
@@ -13,7 +13,7 @@ const getParsedFileData = (filepath) => {
   return parse(readFileSync(filepath, 'utf-8'));
 };
 
-const genDiff = (path1, path2, format = 'stylish') => {
+const genDiff = (path1, path2, formatName = 'stylish') => {
   const filepath1 = getFilePath(path1);
   const filepath2 = getFilePath(path2);
 
@@ -22,9 +22,7 @@ const genDiff = (path1, path2, format = 'stylish') => {
 
   const diff = buildAst(data1, data2);
 
-  const formatter = {
-    stylish,
-  }[format];
+  const formatter = getFormatter(formatName);
 
   const formattedResult = formatter(diff);
 
