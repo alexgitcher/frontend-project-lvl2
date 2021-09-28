@@ -23,3 +23,7 @@ By default use `stylish` format for diff output:
 You can pass the `--format plain` flag to use plain format for output:
 
 [![asciicast](https://asciinema.org/a/hb285lqCpWwjcrFRHp566HhdS.svg)](https://asciinema.org/a/hb285lqCpWwjcrFRHp566HhdS)
+
+Also you can pass the `--format json` flag for output as JSON:
+
+[![asciicast](https://asciinema.org/a/eGq0kgAwqILLHmgBRdE8YRt8k.svg)](https://asciinema.org/a/eGq0kgAwqILLHmgBRdE8YRt8k)
