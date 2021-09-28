@@ -86,3 +86,44 @@ describe('check plain diff', () => {
     expect(actual).toEqual(expected);
   });
 });
+
+describe('check json diff', () => {
+  const resultFilepath = getFilePath('json-result.txt');
+  const expected = readFileSync(resultFilepath, 'utf-8').trim();
+
+  test('json diff', () => {
+    const filepath1 = getFilePath('file1.json');
+    const filepath2 = getFilePath('file2.json');
+
+    const actual = genDiff(filepath1, filepath2, 'json');
+
+    expect(actual).toEqual(expected);
+  });
+
+  test('yaml diff', () => {
+    const filepath1 = getFilePath('file1.yaml');
+    const filepath2 = getFilePath('file2.yaml');
+
+    const actual = genDiff(filepath1, filepath2, 'json');
+
+    expect(actual).toEqual(expected);
+  });
+
+  test('yml diff', () => {
+    const filepath1 = getFilePath('file1.yml');
+    const filepath2 = getFilePath('file2.yml');
+
+    const actual = genDiff(filepath1, filepath2, 'json');
+
+    expect(actual).toEqual(expected);
+  });
+
+  test('json & yaml diff', () => {
+    const filepath1 = getFilePath('file1.json');
+    const filepath2 = getFilePath('file2.yaml');
+
+    const actual = genDiff(filepath1, filepath2, 'json');
+
+    expect(actual).toEqual(expected);
+  });
+});
