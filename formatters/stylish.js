@@ -25,6 +25,18 @@ const objectToString = (obj, depth) => {
   return str;
 };
 
+const getFormattedValue = (value, depth) => {
+  if (value === null) {
+    return value;
+  }
+
+  if (typeof value === 'object') {
+    return `{${objectToString(value, depth + 1)}\n${defaultPad(depth)}}`;
+  }
+
+  return value;
+};
+
 const formatPropertyStr = (node) => {
   const {
     key,
@@ -34,24 +46,22 @@ const formatPropertyStr = (node) => {
     depth,
   } = node;
 
-  const formattedOldValue = typeof oldValue === 'object' ? `{${objectToString(oldValue, depth + 1)}\n${defaultPad(depth)}}` : oldValue;
+  const formattedOldValue = getFormattedValue(oldValue, depth);
 
-  if (typeof value === 'object' && value !== null) {
-    return `${specialPad(depth, state)}${key}: {${objectToString(value, depth + 1)}\n${defaultPad(depth)}}`;
-  }
+  const formattedValue = getFormattedValue(value, depth);
 
   switch (state) {
     case 'added': {
-      return `${specialPad(depth, state)}${key}: ${value}`;
+      return `${specialPad(depth, state)}${key}: ${formattedValue}`;
     }
     case 'deleted': {
-      return `${specialPad(depth, state)}${key}: ${value}`;
+      return `${specialPad(depth, state)}${key}: ${formattedValue}`;
     }
     case 'changed': {
-      return `${specialPad(depth, 'deleted')}${key}: ${formattedOldValue}\n${specialPad(depth, 'added')}${key}: ${value}`;
+      return `${specialPad(depth, 'deleted')}${key}: ${formattedOldValue}\n${specialPad(depth, 'added')}${key}: ${formattedValue}`;
     }
     default: {
-      return `${defaultPad(depth)}${key}: ${value}`;
+      return `${defaultPad(depth)}${key}: ${formattedValue}`;
     }
   }
 };
