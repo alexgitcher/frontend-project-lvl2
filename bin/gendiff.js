@@ -1,15 +1,16 @@
-#!/usr/bin/env node --experimental-json-modules --no-warnings
+#!/usr/bin/env node
 
 import { program } from 'commander';
-import pckg from '../package.json';
 
 import genDiff from '../index.js';
+
+const version = process.env.npm_package_version;
 
 program
   .argument('<filepath1>')
   .argument('<filepath2>')
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format [type]', 'output format', 'stylish')
-  .version(pckg.version)
+  .version(version)
   .action((filepath1, filepath2, { format }) => genDiff(filepath1, filepath2, format))
   .parse();
