@@ -5,56 +5,29 @@ import getFilePath from '../src/utils.js';
 
 import genDiff from '../src/gendiff.js';
 
-describe('check stylish diff', () => {
+const formatters = ['stylish', 'plain', 'json'];
+
+test('stylish as default formatter', () => {
   const resultFilepath = getFilePath('stylish-result.txt');
   const expected = readFileSync(resultFilepath, 'utf-8').trim();
 
-  test('json diff', () => {
-    const filepath1 = getFilePath('file1.json');
-    const filepath2 = getFilePath('file2.json');
+  const filepath1 = getFilePath('file1.json');
+  const filepath2 = getFilePath('file2.json');
 
-    const actual = genDiff(filepath1, filepath2);
+  const actual = genDiff(filepath1, filepath2);
 
-    expect(actual).toEqual(expected);
-  });
-
-  test('yaml diff', () => {
-    const filepath1 = getFilePath('file1.yaml');
-    const filepath2 = getFilePath('file2.yaml');
-
-    const actual = genDiff(filepath1, filepath2);
-
-    expect(actual).toEqual(expected);
-  });
-
-  test('yml diff', () => {
-    const filepath1 = getFilePath('file1.yml');
-    const filepath2 = getFilePath('file2.yml');
-
-    const actual = genDiff(filepath1, filepath2);
-
-    expect(actual).toEqual(expected);
-  });
-
-  test('json & yaml diff', () => {
-    const filepath1 = getFilePath('file1.json');
-    const filepath2 = getFilePath('file2.yaml');
-
-    const actual = genDiff(filepath1, filepath2);
-
-    expect(actual).toEqual(expected);
-  });
+  expect(actual).toEqual(expected);
 });
 
-describe('check plain diff', () => {
-  const resultFilepath = getFilePath('plain-result.txt');
+describe.each(formatters)('check %s diff', (formatter) => {
+  const resultFilepath = getFilePath(`${formatter}-result.txt`);
   const expected = readFileSync(resultFilepath, 'utf-8').trim();
 
   test('json diff', () => {
     const filepath1 = getFilePath('file1.json');
     const filepath2 = getFilePath('file2.json');
 
-    const actual = genDiff(filepath1, filepath2, 'plain');
+    const actual = genDiff(filepath1, filepath2, formatter);
 
     expect(actual).toEqual(expected);
   });
@@ -63,7 +36,7 @@ describe('check plain diff', () => {
     const filepath1 = getFilePath('file1.yaml');
     const filepath2 = getFilePath('file2.yaml');
 
-    const actual = genDiff(filepath1, filepath2, 'plain');
+    const actual = genDiff(filepath1, filepath2, formatter);
 
     expect(actual).toEqual(expected);
   });
@@ -72,7 +45,7 @@ describe('check plain diff', () => {
     const filepath1 = getFilePath('file1.yml');
     const filepath2 = getFilePath('file2.yml');
 
-    const actual = genDiff(filepath1, filepath2, 'plain');
+    const actual = genDiff(filepath1, filepath2, formatter);
 
     expect(actual).toEqual(expected);
   });
@@ -81,48 +54,7 @@ describe('check plain diff', () => {
     const filepath1 = getFilePath('file1.json');
     const filepath2 = getFilePath('file2.yaml');
 
-    const actual = genDiff(filepath1, filepath2, 'plain');
-
-    expect(actual).toEqual(expected);
-  });
-});
-
-describe('check json diff', () => {
-  const resultFilepath = getFilePath('json-result.txt');
-  const expected = readFileSync(resultFilepath, 'utf-8').trim();
-
-  test('json diff', () => {
-    const filepath1 = getFilePath('file1.json');
-    const filepath2 = getFilePath('file2.json');
-
-    const actual = genDiff(filepath1, filepath2, 'json');
-
-    expect(actual).toEqual(expected);
-  });
-
-  test('yaml diff', () => {
-    const filepath1 = getFilePath('file1.yaml');
-    const filepath2 = getFilePath('file2.yaml');
-
-    const actual = genDiff(filepath1, filepath2, 'json');
-
-    expect(actual).toEqual(expected);
-  });
-
-  test('yml diff', () => {
-    const filepath1 = getFilePath('file1.yml');
-    const filepath2 = getFilePath('file2.yml');
-
-    const actual = genDiff(filepath1, filepath2, 'json');
-
-    expect(actual).toEqual(expected);
-  });
-
-  test('json & yaml diff', () => {
-    const filepath1 = getFilePath('file1.json');
-    const filepath2 = getFilePath('file2.yaml');
-
-    const actual = genDiff(filepath1, filepath2, 'json');
+    const actual = genDiff(filepath1, filepath2, formatter);
 
     expect(actual).toEqual(expected);
   });
