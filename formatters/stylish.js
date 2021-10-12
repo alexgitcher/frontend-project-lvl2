@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const defaultReplacer = '    ';
 const specialReplacer = {
   added: '  + ',
@@ -10,7 +8,7 @@ const defaultPad = (depth) => defaultReplacer.repeat(depth);
 const specialPad = (depth, state) => `${defaultPad(depth - 1)}${specialReplacer[state]}`;
 
 const objectToString = (obj, depth) => {
-  const keys = _.keys(obj);
+  const keys = Object.keys(obj);
 
   const str = keys.reduce((acc, key) => {
     const value = obj[key];
@@ -68,7 +66,7 @@ const formatPropertyStr = (node) => {
 
 const stylish = (ast) => {
   const iter = (tree) => {
-    const keys = _.keys(tree);
+    const keys = Object.keys(tree);
 
     const data = keys.reduce((acc, key) => {
       const node = tree[key];
