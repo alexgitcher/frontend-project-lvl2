@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const getOutputValue = (value) => {
   if (typeof value === 'object' && value !== null) {
     return '[complex value]';
@@ -14,7 +12,7 @@ const getOutputValue = (value) => {
 
 const plain = (ast) => {
   const iter = (tree, path = []) => {
-    const keys = _.keys(tree);
+    const keys = Object.keys(tree);
 
     const data = keys.reduce((acc, dataKey) => {
       const node = tree[dataKey];
