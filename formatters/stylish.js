@@ -4,86 +4,62 @@ const specialReplacer = {
   deleted: '  - ',
 };
 
-const defaultPad = (depth) => defaultReplacer.repeat(depth);
-const specialPad = (depth, state) => `${defaultPad(depth - 1)}${specialReplacer[state]}`;
-
-const objectToString = (obj, depth) => {
-  const keys = Object.keys(obj);
-
-  const str = keys.reduce((acc, key) => {
-    const value = obj[key];
-
-    if (typeof value === 'object') {
-      return `${acc}\n${defaultPad(depth)}${key}: {${objectToString(value, depth + 1)}\n${defaultPad(depth)}}`;
-    }
-
-    return `${acc}\n${defaultPad(depth)}${key}: ${value}`;
-  }, '');
-
-  return str;
-};
-
-const getFormattedValue = (value, depth) => {
-  if (value === null) {
-    return value;
+const buildPad = (depth, state) => {
+  if (state) {
+    return `${defaultReplacer.repeat(depth - 1)}${specialReplacer[state]}`;
   }
 
+  return defaultReplacer.repeat(depth);
+};
+
+const objectToString = (obj, depth) => Object.keys(obj).reduce((acc, key) => {
+  const value = obj[key];
+  const pad = buildPad(depth);
+
   if (typeof value === 'object') {
-    return `{${objectToString(value, depth + 1)}\n${defaultPad(depth)}}`;
+    return `${acc}\n${pad}${key}: {${objectToString(value, depth + 1)}\n${pad}}`;
+  }
+
+  return `${acc}\n${pad}${key}: ${value}`;
+}, '');
+
+const getOutputValue = (value, depth) => {
+  if (typeof value === 'object' && value !== null) {
+    return `{${objectToString(value, depth + 1)}\n${buildPad(depth)}}`;
   }
 
   return value;
 };
 
-const formatPropertyStr = (node) => {
-  const {
-    key,
-    value,
-    oldValue,
-    state,
-    depth,
-  } = node;
-
-  const formattedOldValue = getFormattedValue(oldValue, depth);
-
-  const formattedValue = getFormattedValue(value, depth);
+const formatPropertyStr = ({
+  key, value, oldValue, state, depth,
+}) => {
+  const oldValueOutput = getOutputValue(oldValue, depth);
+  const valueOutput = getOutputValue(value, depth);
 
   switch (state) {
-    case 'added': {
-      return `${specialPad(depth, state)}${key}: ${formattedValue}`;
-    }
-    case 'deleted': {
-      return `${specialPad(depth, state)}${key}: ${formattedValue}`;
-    }
-    case 'changed': {
-      return `${specialPad(depth, 'deleted')}${key}: ${formattedOldValue}\n${specialPad(depth, 'added')}${key}: ${formattedValue}`;
-    }
-    default: {
-      return `${defaultPad(depth)}${key}: ${formattedValue}`;
-    }
+    case 'added':
+    case 'deleted':
+      return `${buildPad(depth, state)}${key}: ${valueOutput}`;
+    case 'changed':
+      return `${buildPad(depth, 'deleted')}${key}: ${oldValueOutput}\n${buildPad(depth, 'added')}${key}: ${valueOutput}`;
+    default:
+      return `${buildPad(depth)}${key}: ${valueOutput}`;
   }
 };
 
 const stylish = (ast) => {
-  const iter = (tree) => {
-    const keys = Object.keys(tree);
+  const iter = (tree) => Object.keys(tree).reduce((acc, key) => {
+    const node = tree[key];
+    const { depth, children } = node;
+    const pad = buildPad(depth);
 
-    const data = keys.reduce((acc, key) => {
-      const node = tree[key];
-      const {
-        depth,
-        children,
-      } = node;
+    if (children) {
+      return `${acc}\n${pad}${key}: {${iter(children)}\n${pad}}`;
+    }
 
-      if (children) {
-        return `${acc}\n${defaultPad(depth)}${key}: {${iter(children)}\n${defaultPad(depth)}}`;
-      }
-
-      return `${acc}\n${formatPropertyStr(node)}`;
-    }, '');
-
-    return data;
-  };
+    return `${acc}\n${formatPropertyStr(node)}`;
+  }, '');
 
   const result = iter(ast);
 
