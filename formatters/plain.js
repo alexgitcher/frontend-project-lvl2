@@ -10,46 +10,38 @@ const getOutputValue = (value) => {
   return value;
 };
 
+const formatPropertyStr = ({
+  state, value, oldValue, property,
+}) => {
+  switch (state) {
+    case 'added':
+      return `Property '${property}' was added with value: ${getOutputValue(value)}\n`;
+    case 'deleted':
+      return `Property '${property}' was removed\n`;
+    case 'changed':
+      return `Property '${property}' was updated. From ${getOutputValue(oldValue)} to ${getOutputValue(value)}\n`;
+    default:
+      return '';
+  }
+};
+
 const plain = (ast) => {
-  const iter = (tree, path = []) => {
-    const keys = Object.keys(tree);
+  const iter = (tree, path = []) => Object.keys(tree).reduce((acc, dataKey) => {
+    const {
+      state, value, oldValue, children,
+    } = tree[dataKey];
 
-    const data = keys.reduce((acc, dataKey) => {
-      const node = tree[dataKey];
+    const propertyPath = path.concat(dataKey);
+    const property = `${propertyPath.join('.')}`;
 
-      const {
-        state,
-        value,
-        oldValue,
-        children,
-      } = node;
+    if (children) {
+      return `${acc}${iter(children, propertyPath)}`;
+    }
 
-      const propertyPath = path.concat(dataKey);
-
-      if (children) {
-        return `${acc}${iter(children, propertyPath)}`;
-      }
-
-      const property = `${propertyPath.join('.')}`;
-
-      switch (state) {
-        case 'added': {
-          return `${acc}Property '${property}' was added with value: ${getOutputValue(value)}\n`;
-        }
-        case 'deleted': {
-          return `${acc}Property '${property}' was removed\n`;
-        }
-        case 'changed': {
-          return `${acc}Property '${property}' was updated. From ${getOutputValue(oldValue)} to ${getOutputValue(value)}\n`;
-        }
-        default: {
-          return acc;
-        }
-      }
-    }, '');
-
-    return data;
-  };
+    return `${acc}${formatPropertyStr({
+      state, value, oldValue, property,
+    })}`;
+  }, '');
 
   const result = iter(ast).trim();
 
